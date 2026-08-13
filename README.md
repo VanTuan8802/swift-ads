@@ -21,35 +21,21 @@ Một Swift Package mạnh mẽ và dễ sử dụng để tích hợp Google Ad
 
 ### Swift Package Manager
 
-#### Bước 1: Cấu hình xác thực Bitbucket (chỉ cần làm 1 lần)
+Repo là public trên GitHub nên không cần cấu hình xác thực — chỉ cần thêm package vào Xcode.
 
-Bitbucket đã ngừng hỗ trợ App Password. Cần dùng **API Token** để xác thực.
-
-**1. Tạo API Token:**
-- Truy cập [Atlassian API Tokens](https://id.atlassian.com/manage-profile/security/api-tokens)
-- Bấm **Create API token** → chọn app **Bitbucket** → scope **read:repository:bitbucket**
-- Copy token đã tạo
-
-**2. Lưu token vào Keychain (chạy trong Terminal):**
-
-```bash
-git credential-osxkeychain store <<EOF
-protocol=https
-host=bitbucket.org
-username=<USERNAME_BITBUCKET>
-password=<API_TOKEN>
-EOF
-```
-
-Thay `<USERNAME_BITBUCKET>` bằng username Bitbucket của bạn và `<API_TOKEN>` bằng token vừa tạo.
-
-#### Bước 2: Thêm package vào Xcode
+#### Thêm package vào Xcode
 
 1. Trong Xcode, chọn **File > Add Package Dependencies**
-2. Nhập URL: `https://bitbucket.org/innofyapp/swift-ads.git`
+2. Nhập URL: `https://github.com/VanTuan8802/swift-ads.git`
 3. Chọn version và click **Add Package**
 
-> **Lưu ý:** Không cần nhập username vào URL. Xcode sẽ tự lấy credentials từ Keychain.
+#### Hoặc khai báo trong `Package.swift`
+
+```swift
+dependencies: [
+    .package(url: "https://github.com/VanTuan8802/swift-ads.git", from: "1.0.0")
+]
+```
 
 ## 🔧 Khởi tạo
 
@@ -59,6 +45,11 @@ Thay `<USERNAME_BITBUCKET>` bằng username Bitbucket của bạn và `<API_TOKE
 import swift_ads
 ```
 
+### 2. Khởi tạo AdsManager
+
+Gọi trong `App.init()` hoặc sớm nhất khi app khởi động (sau `FirebaseApp.configure()` nếu dùng Firebase).
+
+```swift
 // Khởi tạo với cấu hình đầy đủ
 AdsManager.shared.initialize(
     intervalShowInter: 15, // Thời gian chờ giữa 2 lần hiện Interstitial (giây)
@@ -445,8 +436,8 @@ Toàn bộ logic xử lý hiển thị, cập nhật trạng thái và callback 
 - `initAppOpenAd(appOpenAdUnitId:opacity:autoEnable:)` - Khởi tạo app open ad với preload
 - `preloadInterstitialAd(adUnitID:opacity:)` - Đưa ad vào bộ đệm Interstitial
 - `preloadRewardedAd(adUnitID:opacity:)` - Đưa ad vào bộ đệm Rewarded
+- `preloadRewardedInterstitialAd(adUnitID:opacity:)` - Đưa ad vào bộ đệm Rewarded Interstitial
 - `showAppOpenAd(adUnitID:onShowed:onDismissed:onFailed:showLoading:)` - Hiển thị app open ad
 - `showInterstitialAd(adUnitID:onShowed:onDismissed:onFailed:forceShow:showLoading:)` - Hiển thị interstitial
 - `showRewardedAd(adUnitID:onShowed:onDismissed:onFailed:onRewarded:showLoading:)` - Hiển thị rewarded ad
 - `showRewardedInterstitialAd(adUnitID:onShowed:onDismissed:onFailed:onRewarded:showLoading:)` - Hiển thị rewarded interstitial
-# swift-ads

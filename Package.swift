@@ -17,7 +17,14 @@ let package = Package(
         .package(url: "https://github.com/airbnb/lottie-spm.git", from: "4.6.0"),
         .package(url: "https://github.com/firebase/firebase-ios-sdk.git", "11.0.0"..<"13.0.0"),
         .package(url: "https://github.com/adjust/ios_sdk.git", from: "5.0.0"),
-        .package(url: "https://github.com/facebook/facebook-ios-sdk.git", from: "18.0.0")
+        .package(url: "https://github.com/facebook/facebook-ios-sdk.git", from: "18.0.0"),
+        // Mediation adapters (từ nhánh feature/update_meta) — ghim exact version
+        .package(url: "https://github.com/googleads/googleads-mobile-ios-mediation-meta.git", exact: "6.21.101"),
+        .package(url: "https://github.com/googleads/googleads-mobile-ios-mediation-applovin.git", exact: "13.6.100"),
+        .package(url: "https://github.com/googleads/googleads-mobile-ios-mediation-pangle.git", exact: "8.1.00600"),
+        .package(url: "https://github.com/googleads/googleads-mobile-ios-mediation-unity.git", exact: "4.18.100"),
+        .package(url: "https://github.com/googleads/googleads-mobile-ios-mediation-mintegral.git", exact: "8.1.500"),
+        .package(url: "https://github.com/googleads/googleads-mobile-ios-mediation-liftoffmonetize.git", exact: "7.7.400")
     ],
     targets: [
         // Objective-C target exposing Google Ads Preview headers (PreloadDelegate, PreloadConfigurationV2, etc.)
@@ -42,6 +49,13 @@ let package = Package(
                 .product(name: "FirebaseAnalytics", package: "firebase-ios-sdk"),
                 .product(name: "AdjustSdk", package: "ios_sdk"),
                 .product(name: "FacebookCore", package: "facebook-ios-sdk"),
+                // Mediation adapters
+                .product(name: "MetaAdapterTarget", package: "googleads-mobile-ios-mediation-meta"),
+                .product(name: "AppLovinAdapterTarget", package: "googleads-mobile-ios-mediation-applovin"),
+                .product(name: "PangleAdapterTarget", package: "googleads-mobile-ios-mediation-pangle"),
+                .product(name: "UnityAdapterTarget", package: "googleads-mobile-ios-mediation-unity"),
+                .product(name: "MintegralAdapterTarget", package: "googleads-mobile-ios-mediation-mintegral"),
+                .product(name: "LiftoffMonetizeAdapterTarget", package: "googleads-mobile-ios-mediation-liftoffmonetize"),
             ],
             resources: [
                 .process("Animation")
